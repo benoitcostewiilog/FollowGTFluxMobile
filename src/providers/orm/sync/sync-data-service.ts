@@ -27,8 +27,8 @@ import * as moment from 'moment';
 
 @Injectable()
 export class SyncDataService {
-    public static serverHost: string = "gt-sed.mobilestock.fr";
-    public static serverPort: number = 1347;
+    public static serverHost: string = "mobilestock.fr";
+    public static serverPort: number = 1344;
 
     public static syncInterval = 300000;
 
@@ -121,9 +121,6 @@ export class SyncDataService {
             SyncDataService.isSyncPossibleProgress = false;
             let promiseHost = this.storage.get('serverHost').then(function (host) {
                 if (host != null) {
-                    if(host=="mobilestock.fr"){
-                        host="gt-sed.mobilestock.fr";
-                    }
                     SyncDataService.serverHost = host;
                 }
 
@@ -162,7 +159,7 @@ export class SyncDataService {
     }
 
     static getServerURL() {
-        return "https://" + SyncDataService.serverHost + ":" + SyncDataService.serverPort + "/";
+        return "http://" + SyncDataService.serverHost + ":" + SyncDataService.serverPort + "/";
     }
 
     changeServerURL(host, port): Promise<any> {
@@ -537,6 +534,14 @@ export class SyncDataService {
             document.location.href = url;
         });
 
+    }
+
+    /**
+     * Ajoute un idUser pour filtrer les données récupéré depuis le serveur
+     * @param idUserServer 
+     */
+    setUser(idUserServer) {
+        //  this.syncDownDataService.syncCondition["wrk_mouvement"].id_utilisateur = idUserServer;
     }
 
 }

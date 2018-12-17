@@ -50,7 +50,11 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.networkService.checkNetwork();
       this.splashScreen.hide();
-     
+      this.appVersion.getVersionNumber().then((version) => {
+        // Raven.setRelease(version);
+      })
+      // Raven.setExtraContext({ serverName: SyncDataService.serverHost + ":" + SyncDataService.serverPort });
+
 
       this.statusBar.backgroundColorByHexString("#00347A");
 
@@ -59,7 +63,8 @@ export class MyApp {
           this.loginService = new LoginService(this.http, this.storage);
           let syncDataService = new SyncDataService(this.http, this.storage, this.networkService);
           syncDataService.init().then(() => {
-           
+            // Raven.setExtraContext({ serverName: SyncDataService.serverHost + ":" + SyncDataService.serverPort });
+
             this.checkLogin();
           }, (error) => {
             LoggerService.error(error);

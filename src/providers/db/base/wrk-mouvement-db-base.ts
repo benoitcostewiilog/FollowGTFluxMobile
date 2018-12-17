@@ -31,12 +31,6 @@ export class WrkMouvementDBBase extends DBEntity<WrkMouvementModel> {
         },
         quantite: {
             type: 'integer'
-        },
-        signature: {
-            type: 'file'
-        },
-        photos: {
-            type: 'file'
         }
     };
 

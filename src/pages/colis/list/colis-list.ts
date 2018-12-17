@@ -535,8 +535,6 @@ export class ColisListPage {
           ]
         });
         confirm.present();
-        this.scannerService.enableKeyDown();
-        confirm.onDidDismiss(() => this.scannerService.disableKeyDown());
       }
     } else {
       this.errorScan("La saisie d'un produit est obligatoire");
@@ -633,8 +631,7 @@ export class ColisListPage {
                 mouvement.commentaire = m.commentaire;
                 mouvement.groupe = m.ref_produit;
                 mouvement.quantite = m.quantite;
-                mouvement.signature = m.signature;
-                mouvement.photos = m.photos;
+
                 mouvement["vidage"] = m.vidage;
                 mouvementArrayToSave.push(mouvement);
               }

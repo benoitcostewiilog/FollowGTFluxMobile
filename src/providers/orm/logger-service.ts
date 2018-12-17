@@ -19,6 +19,7 @@ export class LoggerService {
             switch (type) {
                 case LoggerService.LOG_ERROR:
                     console.error(message, data);
+                    //Raven.captureMessage(JSON.stringify(message)); //desactiver Raven en dev
                     break;
                 case LoggerService.LOG_WARNING:
                     console.warn(message, data);

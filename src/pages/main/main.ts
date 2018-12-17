@@ -166,6 +166,8 @@ export class MainPage {
       if (user) {
         this.user = user;
         this.userName = user.username;
+        this.sync.setUser(user.idServer);
+        //  Raven.setUserContext({ id: user.id + "", username: user.username });
       } else {
         this.app.getRootNav().setRoot(LoginPage);
       }

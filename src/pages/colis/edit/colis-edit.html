@@ -28,15 +28,7 @@
       <h2>Heure de dépose</h2>
       <p>{{mouvement.heure_prise?moment(mouvement.heure_prise).format("DD/MM/YYYY HH:mm:ss"):"Aucune"}}</p>
     </ion-item>
-    <ion-item *ngIf="mouvementOrigin.empl_destination">
-      <h2>Emplacement de destination</h2>
-      <p>{{mouvementOrigin.empl_destination?mouvementOrigin.empl_destination:"Aucun"}}</p>
-    </ion-item>
-    <ion-item *ngIf="mouvementOrigin.destinataire">
-      <h2>Destinataire</h2>
-      <p>{{mouvementOrigin.destinataire?mouvementOrigin.destinataire:"Aucun"}}</p>
-    </ion-item>
-    <ion-item (click)="setQte()" tapable *ngIf="type != TYPE_INTERSTATION">
+    <ion-item (click)="setQte()" tapable>
       <h2>Quantité</h2>
       <p>{{mouvement.quantite}}</p>
       <ion-icon *ngIf="!readonly && groupes.length==0" item-right name="create"></ion-icon>
@@ -51,7 +43,7 @@
     </ion-item>
 
     <ion-item *ngIf="type == TYPE_DEPOSE && groupes.length>0" [hidden]="!showToggleVidageComplet" tapable (click)="vidageCompletClick()">
-      <ion-label>Vidage complet du groupe</ion-label>
+        <ion-label>Vidage complet du groupe</ion-label>
       <ion-toggle readonly [(ngModel)]="vidageComplet" [ngModelOptions]="{standalone: true}"></ion-toggle>
     </ion-item>
 
@@ -59,30 +51,16 @@
       <h2>Produits</h2>
       <p *ngFor="let groupe of groupes">{{groupe.ref_produit}}</p>
     </ion-item>
-
-    <ion-item *ngIf="isSignature" (click)="signatureClick()">
-      <h2>Signature</h2>
-      <p *ngIf="mouvement && mouvement.signature && mouvement.signature.length>0">Ajoutée</p>
-      <p *ngIf="!mouvement || !mouvement.signature || mouvement.signature.length==0">Aucune</p>
-      <ion-icon *ngIf="!readonly" item-end name="create"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <h2>Photos</h2>
-      <file-component maxFile=4 nbFileRow=2 type="picture" [blankAddFile]="true" [showTitle]="false" [serverAddress]="serverAddress"
-        [files]="pictures" [editEnabled]="!readonly"></file-component>
-    </ion-item>
-    <br>
-    <br>
+    <br><br>
   </ion-list>
-  <ion-fab right bottom *ngIf="!readonly && type != TYPE_INTERSTATION">
+  <ion-fab right bottom *ngIf="!readonly">
     <button ion-fab icon-only (click)="save()">
-      <ion-icon name="checkmark"></ion-icon>
+          <ion-icon name="checkmark" ></ion-icon>
     </button>
   </ion-fab>
   <ion-fab left bottom *ngIf="!readonly && !noDelete">
     <button ion-fab icon-only (click)="cancel()" color="danger">
-      <ion-icon name="trash"></ion-icon>
+          <ion-icon name="trash" ></ion-icon>
     </button>
   </ion-fab>
 </ion-content>

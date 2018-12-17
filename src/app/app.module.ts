@@ -16,7 +16,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
 import { Keyboard } from '@ionic-native/keyboard';
-import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { TabPageModule } from '../pages/tab/tab.module';
@@ -41,10 +40,6 @@ import { NetworkService } from '../providers/network-service';
 
 import { UpdateService } from '../providers/update-service';
 import { LoggerService } from '../providers/orm/logger-service';
-import { Diagnostic } from '@ionic-native/diagnostic';
-import { PhotoViewer } from '@ionic-native/photo-viewer';
-import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
-import { ColisEditSignaturePageModule } from '../pages/colis/edit/signature/colis-edit-signature.module';
 import { ScannerService } from '../providers/scanner-service';
 
 @NgModule({
@@ -69,7 +64,6 @@ import { ScannerService } from '../providers/scanner-service';
     ColisEditPageModule,
     ColisPrisePageModule,
     ColisDeposePageModule,
-    ColisEditSignaturePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -93,11 +87,7 @@ import { ScannerService } from '../providers/scanner-service';
     FileTransfer,
     Keyboard,
     ScreenOrientation,
-    Camera,
-    Diagnostic,
-    PhotoViewer,
-    Base64ToGallery,
-    ScannerService
+    ScannerService,
   ]
 })
 export class AppModule { }
