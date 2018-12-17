@@ -241,13 +241,6 @@ export abstract class ModelEntity<T> {
         return array;
     }
 
-    /**
-     * Permet de transformer les données provenant du serveur any[] en model-entity
-     * @param data Les données provenant du serveur à transformer en objet model-entity
-     * @param arrayIdClientServer un tableau comportant la correspondance idServer=>idClient pour les relations ex: arrayIdClientServer[relation][idServer]=>idClient
-     * Cet attribut (si il est remplit) permet d'éviter de faire une requete SELECT vers les relations à chaque fois 
-     * (cette méthode remplit le tableau avec les correspondances idServer=>idClient)
-     */
     createFromArraySync(data, arrayIdClientServer?: any[]): Promise<ModelEntity<T>> {
         arrayIdClientServer = arrayIdClientServer ? arrayIdClientServer : [];
         this.createFromArray(data);

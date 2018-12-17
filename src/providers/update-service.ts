@@ -41,9 +41,7 @@ export class UpdateService {
             });
         });
     }
-    /**
-     * Retourne une Promise<Boolean>, true si il y a eu une update, false sinon
-     */
+ 
     public checkVersion() {
         return new Promise<Boolean>((resolve, reject) => {
             this.isNewVersionCode().then((isNewVersion) => {
@@ -80,9 +78,7 @@ export class UpdateService {
         });
     }
 
-    /**
-     * Efface la BDD et redemarre l'application
-     */
+
     public clearBDD(newVersionCode) {
         let parent = this;
         return new Promise<any>(function (resolve, reject) {

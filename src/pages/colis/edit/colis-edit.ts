@@ -8,8 +8,6 @@ import { WrkMouvementDB } from '../../../providers/db/wrk-mouvement-db';
 import { WrkGroupeDB } from '../../../providers/db/wrk-groupe-db';
 import * as moment from 'moment';
 import { AdmParametrageDB } from '../../../providers/db/adm-parametrage-db';
-import { ColisEditSignaturePage } from './signature/colis-edit-signature';
-import { FileComponent } from '../../../components/file/file-component';
 
 /**
  * Generated class for the Comptage page.
@@ -25,23 +23,16 @@ import { FileComponent } from '../../../components/file/file-component';
 export class ColisEditPage {
 
 
-  @ViewChild(FileComponent)
-  public pictureCmp: FileComponent;
-
   private mouvement: any = {};
   private mouvementOrigin: any = {};
 
   private emplacement = "";
   private type = "";
 
-  public serverAddress = "";
-
-
   private TYPE_PRISE = WrkMouvementDB.TYPE_PRISE;
   private TYPE_DEPOSE = WrkMouvementDB.TYPE_DEPOSE;
   private TYPE_GROUPE = WrkMouvementDB.TYPE_GROUPE;
   private TYPE_INVENTAIRE = WrkMouvementDB.TYPE_INVENTAIRE;
-  private TYPE_INTERSTATION = "Inter-station";
   public moment = moment;
 
   private title = "Détails du produit";
@@ -52,21 +43,17 @@ export class ColisEditPage {
 
   private wrkGroupeDB: WrkGroupeDB;
   private admParametrageDB: AdmParametrageDB;
-
+  
   private groupes = [];
-  private pictures = [];
+
   private vidageComplet = true;
   private showToggleVidageComplet = true;
-  private isSignature = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private sync: SyncDataService) {
-    this.serverAddress = SyncDataService.getServerURL();
     this.type = this.navParams.get("type");
     this.emplacement = navParams.get("emplacement");
     this.mouvementOrigin = this.navParams.get("mouvement");
     this.mouvement = this.mouvementOrigin.toArray();
-    this.mouvement.signature = this.mouvement.signature ? JSON.parse(this.mouvement.signature) : null;
-    this.pictures = this.mouvement.photos ? JSON.parse(this.mouvement.photos) : [];
     this.callback = this.navParams.get("callback");
     this.readonly = navParams.get("readonly") ? true : false;
 
@@ -77,6 +64,7 @@ export class ColisEditPage {
     } else {
       this.noDelete = navParams.get("noDelete") ? true : false;
     }
+
 
   }
 
@@ -96,24 +84,11 @@ export class ColisEditPage {
 
   }
   loadParametrage() {
-
+    
     this.admParametrageDB.isShowToggleVidageCompletUM().then((res) => {
       this.showToggleVidageComplet = res;
     });
-
-    if (this.type == this.TYPE_PRISE) {
-      this.admParametrageDB.isSignatureEcranPrise().then((res) => {
-        this.isSignature = res;
-      });
-    } else if (this.type == this.TYPE_DEPOSE) {
-      this.admParametrageDB.isSignatureEcranDepose().then((res) => {
-        this.isSignature = res;
-      });
-    } else {
-      this.isSignature = false;
-    }
-
-
+  
   }
 
 
@@ -188,17 +163,6 @@ export class ColisEditPage {
   vidageCompletClick() {
     this.vidageComplet = !this.vidageComplet;
   }
-
-  signatureClick() {
-
-    let signature = this.mouvement.signature && this.mouvement.signature.length > 0 ? this.mouvement.signature[0] : null;
-    this.navCtrl.push(ColisEditSignaturePage, {
-      readonly: this.readonly,
-      signature: signature, onSavedCB: (signature) => {
-        this.mouvement.signature = [signature];
-      }
-    })
-  }
   save() {
     let loading = this.loadingCtrl.create({
       duration: 0,
@@ -209,8 +173,6 @@ export class ColisEditPage {
     loading.setContent("Enregistrement du mouvement");
 
     loading.dismiss().then(() => {
-      this.mouvement.signature = JSON.stringify(this.mouvement.signature);
-      this.mouvement.photos = JSON.stringify(this.pictureCmp.getFiles());
       this.mouvementOrigin.createFromArray(this.mouvement);
       this.mouvementOrigin.vidage = this.vidageComplet;
       this.navCtrl.pop();

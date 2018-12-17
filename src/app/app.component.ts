@@ -50,7 +50,6 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.networkService.checkNetwork();
       this.splashScreen.hide();
-     
 
       this.statusBar.backgroundColorByHexString("#00347A");
 
@@ -59,7 +58,6 @@ export class MyApp {
           this.loginService = new LoginService(this.http, this.storage);
           let syncDataService = new SyncDataService(this.http, this.storage, this.networkService);
           syncDataService.init().then(() => {
-           
             this.checkLogin();
           }, (error) => {
             LoggerService.error(error);

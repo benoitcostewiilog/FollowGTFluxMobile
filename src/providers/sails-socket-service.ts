@@ -17,7 +17,7 @@ export class SailsSocketService {
 
     static connect(serverHost, serverPort) {
         if (SailsSocketService.socket == null) {
-            let url = "https://" + serverHost + ":" + serverPort;
+            let url = "http://" + serverHost + ":" + serverPort;
             SailsSocketService.socket = io(url, {
                 query: "__sails_io_sdk_version=0.13.7&__sails_io_sdk_platform=android&__sails_io_sdk_language=javascript",
                 reconnection: true,

@@ -27,13 +27,13 @@ import * as moment from 'moment';
 
 @Injectable()
 export class SyncDataService {
-    public static serverHost: string = "gt-sed.mobilestock.fr";
-    public static serverPort: number = 1347;
+    public static serverHost: string = "mobilestock.fr";
+    public static serverPort: number = 1343;
 
     public static syncInterval = 300000;
 
     public static nbRetry = 5;
-    public static timeout = 20000; //nombre de milliseconde avant un timeout sur une requete HTTP
+    public static timeout = 20000;
 
     public static ready = false;
 
@@ -56,9 +56,6 @@ export class SyncDataService {
     private static isSyncPossibleProgress = false;
 
 
-    /**
-     * Table a synchroniser avec en cles le nom de la table client et en valeur l'api, la table sur le serveur et la classe DB client
-     */
     public static tablesToSync: any;
 
     public static tablesToSyncInit: boolean = false;
@@ -98,7 +95,7 @@ export class SyncDataService {
                 let syncDB = new SyncDB();
                 dbs.push(syncDB);
 
-                dbs.reduce(function (p, db) { //recuperation des donnees pour chaque table dans l'ordre
+                dbs.reduce(function (p, db) {
                     return p.then(function () {
                         return db.createTable();
                     });
@@ -121,9 +118,6 @@ export class SyncDataService {
             SyncDataService.isSyncPossibleProgress = false;
             let promiseHost = this.storage.get('serverHost').then(function (host) {
                 if (host != null) {
-                    if(host=="mobilestock.fr"){
-                        host="gt-sed.mobilestock.fr";
-                    }
                     SyncDataService.serverHost = host;
                 }
 
@@ -162,7 +156,7 @@ export class SyncDataService {
     }
 
     static getServerURL() {
-        return "https://" + SyncDataService.serverHost + ":" + SyncDataService.serverPort + "/";
+        return "http://" + SyncDataService.serverHost + ":" + SyncDataService.serverPort + "/";
     }
 
     changeServerURL(host, port): Promise<any> {
@@ -237,9 +231,6 @@ export class SyncDataService {
         }
     }
 
-    /**
-     * Déclenche une synchronisation de toutes les données lorsque le réseau est récupéré
-     */
     checkNetworkConnected() {
         NetworkService.getObservableOnChanged().subscribe((isConnected) => {
             if (isConnected) {
@@ -538,5 +529,6 @@ export class SyncDataService {
         });
 
     }
+
 
 }

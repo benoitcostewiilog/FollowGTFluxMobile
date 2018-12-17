@@ -310,10 +310,7 @@ export class DB {
         return this.executeQuery(res.query, res.values);
     }
 
-    /**
-     * Execution de plusieurs update sur des lignes ou des tables differentes
-     * @param data un array d'objet {name: string, colId: string, valueId: string, fields: any, values: any}
-     */
+    
     updateBatch(data: any[]) {
         let batchQuery: any[] = [];
         for (let row of data) {
@@ -324,10 +321,7 @@ export class DB {
         return this.executeRawBatchQueries(batchQuery);
 
     }
-    /**
-     * Execution de plusieurs insert sur des lignes ou des tables differentes
-     * @param data un array d'objet {name: string, fields: any, values: any}
-     */
+
     insertBatch(data: any[]) {
         let batchQuery: any[] = [];
         for (let row of data) {

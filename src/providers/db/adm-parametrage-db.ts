@@ -26,9 +26,6 @@ export class AdmParametrageDB extends AdmParametrageDBBase {
     isAutoCreateEmplacement() {
         return this.getParametreBooleanValue("auto_create_emplacement");
     }
-    isDisableScanBarcodeCamera() {
-        return this.getParametreBooleanValue("disable_scan_barcode_camera");
-    }
 
     isShowColisEnPrise() {
         return this.getParametreBooleanValue("show_colis_en_prise");
@@ -64,17 +61,6 @@ export class AdmParametrageDB extends AdmParametrageDBBase {
     }
     isDeposeProduitNonPris() {
         return this.getParametreBooleanValue("depose_produit_non_pris");
-    }
-    isPopupEmplacementDestinationInvalide() {
-        return this.getParametreBooleanValue("popup_emplacement_destination_invalide");
-    }
-
-    isSignatureEcranPrise() {
-        return this.getParametreBooleanValue("signature_ecran_prise");
-    }
-
-    isSignatureEcranDepose() {
-        return this.getParametreBooleanValue("signature_ecran_depose");
     }
 
     getParametreIntValue(nom: string, defaut: number) {

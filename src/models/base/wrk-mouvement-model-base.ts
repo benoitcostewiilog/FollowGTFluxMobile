@@ -19,10 +19,6 @@ export class WrkMouvementModelBase extends ModelEntity<WrkMouvementModel> {
     public groupe: string;
     public commentaire: string;
     public quantite: number;
-    public signature: any;
-    public photos: any;
-
-
     public userDB: UserDB = new UserDB();
     public user: UserModel;
 
@@ -42,8 +38,6 @@ export class WrkMouvementModelBase extends ModelEntity<WrkMouvementModel> {
         this.groupe = this.createFromArrayExtractValue(data.groupe);
         this.commentaire = this.createFromArrayExtractValue(data.commentaire);
         this.quantite = this.createFromArrayExtractValue(data.quantite);
-        this.signature = this.createFromArrayParseJsonObject(data.signature);
-        this.photos = this.createFromArrayParseJsonObject(data.photos);
     }
 
     toArray(): any {
@@ -56,8 +50,6 @@ export class WrkMouvementModelBase extends ModelEntity<WrkMouvementModel> {
             groupe: this.groupe,
             commentaire: this.commentaire,
             quantite: this.quantite,
-            signature: this.toArrayStringifyJsonObject(this.signature),
-            photos: this.toArrayStringifyJsonObject(this.photos),
         };
 
         return this.toArrayAddDefaultAttribut(array);

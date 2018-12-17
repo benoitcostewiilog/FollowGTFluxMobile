@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { LoggerService } from '../logger-service';
-import { ConstantServices } from '../../constant-service';
 
 @Injectable()
 export class SyncUpDataService {
@@ -33,14 +32,14 @@ export class SyncUpDataService {
         "user",
         "wrk_groupe",
         "ref_emplacement",
-        "wrk_inventaire",
+        "wrk_inventaire"
     ];
     protected tablesToSyncTimeout: any = {
         "wrk_mouvement": 60000,
         "user": 20000,
         "wrk_groupe": 30000,
         "ref_emplacement": 20000,
-        "wrk_inventaire": 30000,
+        "wrk_inventaire": 30000
     };
 
     constructor(private http: Http) {
@@ -459,7 +458,7 @@ export class SyncUpDataService {
         return new Observable<any>(observer => {
             parent.uploadFiles(data, apiUrl, tableDB).then(function () {
                 let body = JSON.stringify({ data: data });
-                let headers = new Headers({ 'Content-Type': 'application/json', token: ConstantServices.TOKEN });
+                let headers = new Headers({ 'Content-Type': 'application/json' });
                 let options = new RequestOptions({ headers: headers });
 
                 let timeout = parent.tablesToSyncTimeout[tableName] ? parent.tablesToSyncTimeout[tableName] : parent.timeout;
@@ -490,7 +489,7 @@ export class SyncUpDataService {
     */
     sendDeletedDataToServer(data, apiUrl, tableName): Observable<any> {
         let body = JSON.stringify({ data: data });
-        let headers = new Headers({ 'Content-Type': 'application/json', token: ConstantServices.TOKEN });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         let timeout = this.tablesToSyncTimeout[tableName] ? this.tablesToSyncTimeout[tableName] : this.timeout;
@@ -515,7 +514,7 @@ export class SyncUpDataService {
         return new Observable<any>(observer => {
             parent.uploadFiles(data, apiUrl, tableDB).then(function () {
                 let body = JSON.stringify({ data: data });
-                let headers = new Headers({ 'Content-Type': 'application/json', token: ConstantServices.TOKEN });
+                let headers = new Headers({ 'Content-Type': 'application/json' });
                 let options = new RequestOptions({ headers: headers });
 
                 let timeout = parent.tablesToSyncTimeout[tableName] ? parent.tablesToSyncTimeout[tableName] : parent.timeout;
@@ -557,27 +556,19 @@ export class SyncUpDataService {
                             row[attr] = item;
                             if (item) {
                                 for (let file of item) {
-                                    if (file.local) {
-
-                                        if (file.fileURL.indexOf('file:') == 0) {
-                                            let parent = this;
-                                            let options = {
-                                                fileName: file.fileURL.split('/').pop(),
-                                                headers: { token: ConstantServices.TOKEN }
-                                            };
-                                            let promise = new Promise<any>(function (resolve, reject) {
-                                                parent.fileUpload.upload(file.fileURL, SyncDataService.getServerURL() + apiUrl + parent.actionUploadUrl, options).then(function (response) {
-                                                    let res = JSON.parse(response.response);
-                                                    file.fileURL = res.fileURL;
-                                                    file.local = undefined;
-                                                    LoggerService.info("File uploaded :" + file.fileURL);
-                                                    resolve(attr);
-                                                }).catch(function (error) {
-                                                    reject(error);
-                                                })
-                                            });
-                                            promisesRow.push(promise);
-                                        }
+                                    if (file.fileURL.indexOf('file:') == 0) {
+                                        let parent = this;
+                                        let promise = new Promise<any>(function (resolve, reject) {
+                                            parent.fileUpload.upload(file.fileURL, SyncDataService.getServerURL() + apiUrl + parent.actionUploadUrl, {}).then(function (response) {
+                                                let res = JSON.parse(response.response);
+                                                file.fileURL = res.fileURL;
+                                                LoggerService.info("File uploaded :" + file.fileURL);
+                                                resolve(attr);
+                                            }).catch(function (error) {
+                                                reject(error);
+                                            })
+                                        });
+                                        promisesRow.push(promise);
                                     }
                                 }
                             }

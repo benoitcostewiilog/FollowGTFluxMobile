@@ -503,7 +503,8 @@ export class ColisListPage {
           }
         }
       } else {
-        let mouvement = this.mouvementArray[index];
+        this.errorScan("Le produit est déja dans la liste");
+      /*  let mouvement = this.mouvementArray[index];
         let confirm = this.alertCtrl.create({
           title: "Augmenter la quantité",
           message: "Augmenter la quantité du produit " + mouvement.ref_produit + " de :",
@@ -534,9 +535,7 @@ export class ColisListPage {
             }
           ]
         });
-        confirm.present();
-        this.scannerService.enableKeyDown();
-        confirm.onDidDismiss(() => this.scannerService.disableKeyDown());
+        confirm.present();*/
       }
     } else {
       this.errorScan("La saisie d'un produit est obligatoire");
@@ -633,8 +632,7 @@ export class ColisListPage {
                 mouvement.commentaire = m.commentaire;
                 mouvement.groupe = m.ref_produit;
                 mouvement.quantite = m.quantite;
-                mouvement.signature = m.signature;
-                mouvement.photos = m.photos;
+
                 mouvement["vidage"] = m.vidage;
                 mouvementArrayToSave.push(mouvement);
               }
